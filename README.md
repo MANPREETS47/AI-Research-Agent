@@ -44,6 +44,37 @@ Features
    pip install -r requirements.txt
    ```
 
+## Usage
+Run the backend
+```
+python main.py
+```
+Run the frontend
+```
+streamlit run chatbot_frontend.py
+```
+
+## Project Structure
+```
+├── main.py          # Backend: AI Research Agent logic
+├── app.py           # Streamlit frontend
+├── requirements.txt # Python dependencies
+├── .venv/           # Virtual environment
+└── README.md
+```
+
+## How it works
+1. User Input: The user asks a question through the chat interface.
+
+2. Search Phase: The agent performs searches on Google, Bing, and Reddit.
+
+3. Analysis Phase: Each search result is analyzed and summarized individually.
+
+4. Synthesis Phase: All individual analyses are combined into a cohesive final answer.
+
+5. Framing Phase: The final answer is refined for readability and presented to the user.
+
+
 
 
 
