@@ -13,3 +13,14 @@ Human-friendly Responses: Generates easy-to-read final answers for user queries.
 Streamlit Frontend: Interactive chat interface for real-time questions and answers.
 
 State Management: Uses LangGraph for structured flow and state handling of queries and results.
+
+Tech Stack
+
+Backend: Python, LangGraph, LangChain-Groq, DDGS (DuckDuckGo Search)
+
+Frontend: Streamlit
+
+LLM: ChatGroq (OpenAI GPT OSS 20B)
+
+Other Libraries: pydantic, typing_extensions, dotenv
+
