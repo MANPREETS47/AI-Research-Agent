@@ -24,6 +24,28 @@ Features
 
 - Other Libraries: pydantic, typing_extensions, dotenv
 
+# Installation
+
+1. Clone the repository
+   ```
+   git clone <your-repo-url>
+   cd ai-research-agent
+   ```
+2. Create a virtual environment:
+   ```
+   python -m venv .venv
+   ```
+3. Activate the virtual environment:
+   ```
+   .venv\Scripts\activate
+   ```
+4. Install dependencies:
+   ```
+   pip install -r requirements.txt
+   ```
+
+
+
 
 
 
