@@ -1,4 +1,4 @@
-AI Research Agent 🔍
+##AI Research Agent 🔍
 
 Multi-source research chatbot that gathers information from Google, Bing, and Reddit, analyzes the results, and provides concise, human-friendly answers.
 
@@ -23,4 +23,5 @@ Frontend: Streamlit
 LLM: ChatGroq (OpenAI GPT OSS 20B)
 
 Other Libraries: pydantic, typing_extensions, dotenv
+
 
