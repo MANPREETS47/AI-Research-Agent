@@ -4,7 +4,6 @@ from langchain_core.messages import HumanMessage
 
 st.set_page_config(page_title="AI Research Agent", page_icon="🔍", layout="wide")
 st.title("🔍 AI Research Agent")
-st.caption("Multi-source research powered by Google, Bing, and Reddit")
 
 if 'message_history' not in st.session_state:
     st.session_state['message_history'] = []

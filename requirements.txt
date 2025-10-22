@@ -3,3 +3,4 @@ langgraph
 streamlit
 langchain_groq
 ddgs
+python-dotenv
