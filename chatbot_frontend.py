@@ -2,6 +2,8 @@ import streamlit as st
 from main import graph
 from langchain_core.messages import HumanMessage
 
+CONFIG = {'configurable': {'thread_id': "1"}}
+
 st.set_page_config(page_title="AI Research Agent", page_icon="🔍", layout="wide")
 st.title("🔍 AI Research Agent")
 
@@ -37,14 +39,23 @@ if user_input:
         "final_ans_framer": None,
     }
 
-    with st.spinner("Processing your query..."):
-        response = graph.invoke(state)
+    # with st.spinner("Processing your query..."):
+    #     response = graph.invoke(state, config=CONFIG)
 
-    ai_message = response.get('final_ans_framer') or response.get('final_answer')
+    # ai_message = response.get('final_ans_framer') or response.get('final_answer')
+
+    # st.session_state['message_history'].append({'role': 'assistant', 'content': ai_message})
+    with st.chat_message("assistant"):
+        for message_chunk, metadata in graph.stream(
+                state,
+                config=CONFIG,
+                stream_mode='messages'
+           ):
+            st.write(message_chunk.content)
+
+    ai_message = response['final_ans_framer'] or response['final_answer']
 
     st.session_state['message_history'].append({'role': 'assistant', 'content': ai_message})
-    with st.chat_message("assistant"):
-        st.markdown(ai_message)
 
     # Save backend state for future use if needed
     st.session_state['backend_state'] = response

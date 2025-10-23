@@ -8,9 +8,11 @@ from pydantic import BaseModel, Field
 from ddgs import DDGS
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.messages import SystemMessage, HumanMessage, AIMessage
+from langgraph.checkpoint.memory import MemorySaver
 
 load_dotenv()
 
+checkpointer = MemorySaver()
 llm = ChatGroq(model="openai/gpt-oss-20b")
 
 class State(TypedDict):
@@ -170,7 +172,7 @@ graph_builder.add_edge("analyze_reddit_results", "synthesize_analyses")
 graph_builder.add_edge("synthesize_analyses", "final_ans_framer")
 graph_builder.add_edge("final_ans_framer", END)
 
-graph = graph_builder.compile()
+graph = graph_builder.compile(checkpointer=checkpointer)
 
 # def run_chatbot():
 #     print("Multi_Source Research Agent")
