@@ -12,6 +12,7 @@ from langgraph.checkpoint.memory import MemorySaver
 
 load_dotenv()
 
+
 checkpointer = MemorySaver()
 llm = ChatGroq(model="openai/gpt-oss-20b")
 
@@ -184,7 +185,7 @@ graph = graph_builder.compile(checkpointer=checkpointer)
 #             print("Bye")
 #             break
 
-#         state = {
+# state = {
 #             "messages": [{"role": "user", "content": user_input}],
 #             "user_question": user_input,
 #             "google_results": None,
