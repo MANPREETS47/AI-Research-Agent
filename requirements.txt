@@ -4,3 +4,6 @@ streamlit
 langchain_groq
 ddgs
 python-dotenv
+tavily
+fastapi
+uvicorn
