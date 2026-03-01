@@ -58,12 +58,12 @@ def route_query(state: State):
     return ["planner"]
 
 def chat_node(state: State):
-    question = state["user_question"]
-
-    response = llm.invoke([
+    conversation = [
         SystemMessage(content="You are a helpful conversational assistant."),
-        HumanMessage(content=question)
-    ])
+        *state["messages"],
+    ]
+
+    response = llm.invoke(conversation)
 
     return {"final_ans_framer": response.content}
     
@@ -161,16 +161,15 @@ def final_ans_framer(state: State):
     print(f"Framing final answer for question: {user_question}")
 
     messages = [
-        SystemMessage(content="""You are a helpful research assistant that provides clear, concise answers.
-Formatting rules:
-- Be concise and to the point. Avoid unnecessary filler.
-- Use short paragraphs and bullet points for readability.
-- Do NOT use Markdown tables unless the user explicitly asks for one.
-- Do NOT use HTML tags like <br>.
-- Use bold (**text**) sparingly for emphasis on key terms only.
-- Keep the answer focused and conversational, not like a Wikipedia article.
-- Aim for a response length appropriate to the question — short questions get short answers."""),
-        HumanMessage(content=f"Question: {user_question}\n\nResearch findings:\n{final_answer}\n\nProvide a clear, concise answer based on these findings."),
+        SystemMessage(content="""You are a helpful research assistant that provides clear, concise answers."""),
+        HumanMessage(content=f"""Question: {user_question}\n\nResearch findings:\n{final_answer}\n\nProvide a clear, concise answer based on these findings.
+                     Formatting rules:- Be concise and to the point. Avoid unnecessary filler.
+                                    - Use short paragraphs and bullet points for readability.
+                                    - Do NOT use Markdown tables unless the user explicitly asks for one.
+                                    - Do NOT use HTML tags like <br>.
+                                    - Use bold (**text**) sparingly for emphasis on key terms only.
+                                    - Keep the answer focused and conversational, not like a Wikipedia article.
+                                    - Aim for a response length appropriate to the question — short questions get short answers."""),
     ]
 
     response = llm.invoke(messages)

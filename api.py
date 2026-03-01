@@ -18,7 +18,7 @@ app.add_middleware(
 
 class QueryRequest(BaseModel):
     question: str
-    thread_id: str = "default"
+    thread_id: str = "1"
 
 class QueryResponse(BaseModel):
     answer: str

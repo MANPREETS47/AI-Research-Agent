@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import ReactMarkdown from "react-markdown";
 
 interface Message {
@@ -8,8 +8,15 @@ interface Message {
 
 function App() {
   const [input, setInput] = useState("");
-  const [messages, setMessages] = useState<Message[]>([]);
+  const [messages, setMessages] = useState<Message[]>(() => {
+    const saved = localStorage.getItem("chatMessages");
+    return saved ? JSON.parse(saved) : [];
+  });
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  useEffect(() => {
+    localStorage.setItem("chatMessages", JSON.stringify(messages));
+  }, [messages]);
 
   const sendMessage = async () => {
     if (!input.trim()) return;
@@ -70,8 +77,15 @@ function App() {
     }
   };
 
+  const newChat = () => {
+    setMessages([]);
+    setInput("");
+    localStorage.removeItem("chatMessages");
+  };
+
   return (
     <div className="min-h-screen bg-[#1a1a1a] text-white flex flex-col">
+
 
       {messages.length === 0 ? (
         <div className="flex flex-col items-center justify-center flex-1">
@@ -99,6 +113,14 @@ function App() {
         </div>
       ) : (
         <div className="flex flex-col flex-1">
+          <div className="sticky top-0 z-10 flex justify-end p-4">
+            <button
+            onClick={newChat}
+            className="bg-gray-600 px-4 py-1 rounded-xl hover:bg-gray-700 transition-colors duration-200"
+            >
+              New Chat
+            </button>
+          </div>
 
           {/* Messages */}
           <div className="flex-1 overflow-y-auto p-6">
@@ -119,7 +141,7 @@ function App() {
           </div>
 
           {/* Bottom Input */}
-          <div className="border-t border-gray-700 p-4">
+          <div className="sticky bottom-0 border-t border-gray-700 p-4 bg-[#1a1a1a]">
             <div className="max-w-3xl mx-auto flex gap-2">
               <textarea
                 ref={textareaRef}
