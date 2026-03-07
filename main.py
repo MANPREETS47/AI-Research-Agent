@@ -31,10 +31,11 @@ class State(TypedDict):
     query_type: str | None
     
 class Plan(BaseModel):
+    intent: str
     needs_web: bool
     needs_reddit: bool
-    needs_deep_research: bool
-    answer_type: str
+    research_depth: str
+    reasoning: str
     
 class Query_Type(BaseModel):
     category: str
@@ -73,9 +74,49 @@ def planner(state: State):
     structured_llm = llm.with_structured_output(Plan)
 
     plan = structured_llm.invoke([
-        SystemMessage(content="You are a research planning expert."),
+        SystemMessage(content="""
+You are a research planning system.
+
+Your job is to decide how the assistant should answer the question.
+
+You must decide:
+
+1. intent
+   - chat
+   - factual
+   - research
+   - opinion
+
+2. needs_web
+   True if the question requires current or external information.
+
+3. needs_reddit
+   True if the question requires opinions, experiences, or community discussion.
+
+4. research_depth
+   - none
+   - quick_lookup
+   - multi_source
+
+Guidelines:
+
+- If the question is simple knowledge (e.g. "What is Python?")
+  → no web search needed.
+
+- If the question is about current events, statistics, or new technology
+  → use web search.
+
+- If the question asks for opinions or user experiences
+  → include reddit search.
+
+- Chat messages like "hello", "can you help me?"
+  → intent = chat and no research.
+
+Explain your reasoning briefly.
+"""),
         HumanMessage(content=f"Plan research steps for: {user_question}")
     ])
+    print(f"Generated plan: {plan}✅")
 
     return {"plan": plan}
 
@@ -89,6 +130,9 @@ def route_plan(state: State):
 
     if plan.needs_reddit:
         routes.append("reddit_search")
+
+    if not routes:
+        routes.append("final_ans_framer")
 
     return routes
 
@@ -178,8 +222,6 @@ def final_ans_framer(state: State):
 
 graph_builder = StateGraph(State)
 
-graph_builder = StateGraph(State)
-
 graph_builder.add_node("classify_query", classify_query)
 graph_builder.add_node("chat_node", chat_node)
 graph_builder.add_node("planner", planner)
@@ -201,7 +243,7 @@ graph_builder.add_edge("chat_node", END)
 graph_builder.add_conditional_edges(
     "planner",
     route_plan,
-    ["web_search", "reddit_search"]
+    ["web_search", "reddit_search", "final_ans_framer"]
 )
 
 graph_builder.add_edge("web_search", "analyze_web_results")

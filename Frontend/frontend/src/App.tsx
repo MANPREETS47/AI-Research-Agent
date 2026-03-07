@@ -12,11 +12,19 @@ function App() {
     const saved = localStorage.getItem("chatMessages");
     return saved ? JSON.parse(saved) : [];
   });
+  const [threadId, setThreadId] = useState<string>(() => {
+    const saved = localStorage.getItem("threadId");
+    return saved || crypto.randomUUID();
+  });
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
     localStorage.setItem("chatMessages", JSON.stringify(messages));
   }, [messages]);
+
+  useEffect(() => {
+    localStorage.setItem("threadId", threadId);
+  }, [threadId]);
 
   const sendMessage = async () => {
     if (!input.trim()) return;
@@ -36,7 +44,7 @@ function App() {
     const response = await fetch("http://127.0.0.1:8000/query", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ question: userMessage }),
+      body: JSON.stringify({ question: userMessage, thread_id: threadId }),
     });
 
     const reader = response.body!.getReader();
@@ -80,7 +88,10 @@ function App() {
   const newChat = () => {
     setMessages([]);
     setInput("");
+    const newThreadId = crypto.randomUUID();
+    setThreadId(newThreadId);
     localStorage.removeItem("chatMessages");
+    localStorage.setItem("threadId", newThreadId);
   };
 
   return (
