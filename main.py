@@ -154,7 +154,6 @@ def reddit_search(state: State):
     reddit_results = []
 
     with DDGS() as ddgs:
-        # ddgs.text does not accept a 'site' kwarg; use a site: filter in the query
         query = f"site:reddit.com {user_question}".strip()
         for r in ddgs.text(query, max_results=5):
             reddit_results.append(r)
