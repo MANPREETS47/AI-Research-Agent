@@ -89,32 +89,6 @@ JWT tokens are used to secure all API endpoints.
 
 ---
 
-# 🏗️ System Architecture
-
-```
-Frontend (React)
-        │
-        ▼
-FastAPI Backend
-        │
-        ├── Authentication (JWT + Google OAuth)
-        │
-        ├── Chat API
-        │
-        ▼
-LangGraph Research Agent
-        │
-        ├── Query Classifier
-        ├── Research Planner
-        ├── Web Retrieval (Tavily)
-        ├── Reddit Retrieval
-        ├── Source Analysis
-        ├── Response Synthesis
-        │
-        ▼
-Database (SQLite / PostgreSQL)
-```
-
 ---
 
 # 🛠️ Tech Stack
@@ -287,3 +261,4 @@ Inspired by systems such as:
 # 🧠 Final Note
 
 This project demonstrates how **LLM systems can be designed as structured research agents rather than simple chatbots**, enabling more reliable and explainable AI responses.
+
