@@ -1,4 +1,4 @@
-# 🧠 Autonomous Research Agent
+# 🧠 ThinkGraph
 
 An intelligent **AI-powered research assistant** that performs structured research across multiple sources, analyzes information, and produces clear, concise answers in real time.
 
@@ -176,6 +176,7 @@ Explain how transformers work in deep learning
 # ⭐ If You Like This Project
 
 Give the repository a ⭐ on GitHub.
+
 
 
 
