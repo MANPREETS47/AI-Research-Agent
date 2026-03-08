@@ -74,16 +74,11 @@ def planner(state: State):
     structured_llm = llm.with_structured_output(Plan)
 
     plan = structured_llm.invoke([
-        SystemMessage(content="""
-You are a research planning system.
-
-Your job is to decide how the assistant should answer the question.
-
-You must decide:
-
-1. intent
-   - chat
-   - factual
+        SystemMessage(content="""You are a research planning system. Your job is to decide how the assistant should answer the question.
+                      You must decide:
+                      1. intent
+                      - chat
+                      - factual
    - research
    - opinion
 

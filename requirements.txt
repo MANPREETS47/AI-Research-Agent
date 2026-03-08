@@ -7,3 +7,10 @@ python-dotenv
 tavily
 fastapi
 uvicorn
+python-jose
+passlib[bcrypt]
+python-multipart
+sqlalchemy
+authlib
+fastapi-users
+database

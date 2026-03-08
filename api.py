@@ -5,6 +5,17 @@ from main import graph
 from fastapi.responses import StreamingResponse
 import asyncio
 import json
+from proxi import get_current_user
+from schema import RegisterRequest
+from auth import hash_password
+from models import Chat, User
+from database import SessionLocal, engine, Base
+from schema import LoginRequest
+from auth import verify_password, create_access_token
+from fastapi import HTTPException, Depends
+from sqlalchemy.exc import IntegrityError
+
+Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 
@@ -52,3 +63,51 @@ async def handle_query(request: QueryRequest):
             await asyncio.sleep(0.03)
 
     return StreamingResponse(event_stream(), media_type="text/plain")
+
+@app.post("/register")
+def register(user: RegisterRequest):
+    db = SessionLocal()
+    try:
+        hashed_password = hash_password(user.password)
+
+        new_user = User(
+            email=user.email,
+            password=hashed_password
+        )
+
+        db.add(new_user)
+        db.commit()
+
+        return {"message": "User created"}
+    except IntegrityError:
+        db.rollback()
+        raise HTTPException(status_code=400, detail="Email already registered")
+    finally:
+        db.close()
+
+@app.post("/login")
+def login(request: LoginRequest):
+    db = SessionLocal()
+    try:
+        user = db.query(User).filter(User.email == request.email).first()
+
+        if not user:
+            raise HTTPException(status_code=401, detail="Invalid credentials")
+
+        if not verify_password(request.password, user.password):
+            raise HTTPException(status_code=401, detail="Invalid credentials")
+
+        token = create_access_token({"sub": user.id})
+
+        return {"access_token": token}
+    finally:
+        db.close()
+
+@app.get("/chats")
+def get_chats(user_id: str = Depends(get_current_user)):
+
+    db = SessionLocal()
+
+    chats = db.query(Chat).filter(Chat.user_id == user_id).all()
+
+    return {"chats": [{"id": chat.id, "title": chat.title} for chat in chats]}
