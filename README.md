@@ -1,18 +1,51 @@
 # AI Research Agent 🔍
 
-## Multi-source research chatbot that gathers information from Google, Bing, and Reddit, analyzes the results, and provides concise, human-friendly answers.
+## An intelligent AI-powered research assistant that performs structured research across multiple sources, analyzes information, and produces clear, concise answers in real time. Built with LangGraph, FastAPI, React, and modern LLM tooling, this system combines conversational AI with automated research workflows.
 
-Features
+🚀 Features
+🧠 Intelligent Query Classification
 
-- Multi-source Research: Simultaneously searches Google, Bing, and Reddit for relevant content.
+The system first determines whether the user query is:
 
-- Analysis & Synthesis: Summarizes and synthesizes search results using a powerful LLM (ChatGroq).
+Casual conversation
 
-- Human-friendly Responses: Generates easy-to-read final answers for user queries.
+General knowledge
 
-- Streamlit Frontend: Interactive chat interface for real-time questions and answers.
+Research-oriented
 
-- State Management: Uses LangGraph for structured flow and state handling of queries and results.
+This prevents unnecessary searches and improves response speed.
+
+🔎 Multi-Source Research
+
+For research questions, the agent automatically gathers information from:
+
+🌐 Web search (Tavily)
+
+💬 Community insights (Reddit)
+
+These sources are analyzed and synthesized before producing a final answer.
+
+💬 Persistent Chat Sessions
+
+Users can:
+
+Create new chats
+
+Resume previous conversations
+
+View chat history in a sidebar
+
+Each chat is securely linked to the authenticated user.
+
+🔐 Authentication System
+
+Supports:
+
+Email & Password login
+
+Google OAuth login
+
+JWT tokens are used to secure all API endpoints.
 
 ## Tech Stack
 
@@ -73,6 +106,7 @@ streamlit run chatbot_frontend.py
 4. Synthesis Phase: All individual analyses are combined into a cohesive final answer.
 
 5. Framing Phase: The final answer is refined for readability and presented to the user.
+
 
 
 
