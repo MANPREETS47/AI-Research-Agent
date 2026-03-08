@@ -87,10 +87,6 @@ Supports:
 
 JWT tokens are used to secure all API endpoints.
 
----
-
----
-
 # 🛠️ Tech Stack
 
 ## Frontend
@@ -116,31 +112,6 @@ JWT tokens are used to secure all API endpoints.
 ## Authentication
 - JWT Authentication
 - Google OAuth
-
----
-
-# 📂 Project Structure
-
-```
-project-root
-│
-├── backend
-│   ├── main.py
-│   ├── database.py
-│   ├── models.py
-│   ├── auth.py
-│   ├── oauth.py
-│   ├── agent.py
-│   └── schemas.py
-│
-├── frontend
-│   ├── src
-│   └── components
-│
-└── README.md
-```
-
----
 
 # ⚙️ Installation
 
@@ -202,63 +173,11 @@ Best programming languages according to developers?
 Explain how transformers work in deep learning
 ```
 
----
-
-# 📸 Screenshots
-
-*(Add screenshots after UI is finalized)*
-
-- Chat Interface
-- Research Response Example
-- Chat History Sidebar
-
----
-
-# 📈 Future Improvements
-
-- Deep research mode with multi-query exploration
-- Source citation display
-- Vector memory for long-term knowledge
-- Research reports generation
-- Agent tool expansion
-
----
-
-# 👨‍💻 Author
-
-Developed by **Manpreet Singh**
-
-Focused on building intelligent AI systems combining:
-
-- LLMs
-- Autonomous agents
-- Full-stack engineering
-
----
-
 # ⭐ If You Like This Project
 
 Give the repository a ⭐ on GitHub.
 
----
 
-# 📜 License
 
-MIT License
 
----
-
-# 💡 Inspiration
-
-Inspired by systems such as:
-
-- Perplexity AI
-- ChatGPT
-- Autonomous research agents
-
----
-
-# 🧠 Final Note
-
-This project demonstrates how **LLM systems can be designed as structured research agents rather than simple chatbots**, enabling more reliable and explainable AI responses.
 
